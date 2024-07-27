@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:47 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/26 22:40:01 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:34:45 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Fixed
 		Fixed(void);
 		Fixed(const Fixed &copy);
 		~Fixed(void);
-		void 	operator=(Fixed &copy);
+		Fixed	&operator=(Fixed &copy);
 		int		getRawBits(void);
 		void	setRawBits(int const raw);
 

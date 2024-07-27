@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:47 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/26 22:54:49 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:57:49 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ class Fixed
 		Fixed(const int value);
 		Fixed(const float value);
 		~Fixed(void);
-		void 		operator=(Fixed &copy);
+		Fixed		&operator=(Fixed const &copy);
 		int			getRawBits(void);
 		void		setRawBits(int const raw);
 		float		toFloat(void) const;
 		int			toInt(void) const;
-		std::string	operator<<(const Fixed &copy); 
 };
+
+/*We MUST define this operator here because the seconds param always is this and 
+in this case we need the second arg like copy of Fixed*/
+std::ostream&	operator<<(std::ostream &, const Fixed &copy); 
 
 #endif

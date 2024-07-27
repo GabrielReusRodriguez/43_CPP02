@@ -6,15 +6,47 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/26 22:54:41 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:57:55 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <string>
 
 #include "Fixed.hpp"
 
 const int Fixed::number_fractional_bits = 8;
+
+
+static float	ft_pow( int base, int exp)
+{
+	float	acum;
+	int		i;
+	
+	acum = 1;
+	if (exp == 0)
+		return (1);
+	if (exp > 0)
+	{
+		i = 0;
+		while (i <= exp)
+		{
+			acum = acum * (float) base;
+			i++;
+		}
+		return (acum);
+	}
+	else
+	{
+		i = 0;
+		while (i >= exp)
+		{
+			acum = acum / (float)base;
+			i--;
+		}
+		return (acum);
+	}
+}
 
 Fixed::Fixed(void)
 {
@@ -26,17 +58,18 @@ Fixed::Fixed(const Fixed &copy)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	this->number_value = copy.number_value;
-	//this = copy;
 }
 
 Fixed::Fixed(const int value)
 {
-	this->number_value = value;
+	std::cout << "Int constructor called" << std::endl;
+	this->number_value = value * ft_pow(2,Fixed::number_fractional_bits);
 }
 
 Fixed::Fixed(const float value)
 {
-	//TODO	
+	std::cout << "Float constructor called" << std::endl;
+	this->number_value = value * ft_pow(2, Fixed::number_fractional_bits);
 }
 
 Fixed::~Fixed(void)
@@ -44,10 +77,11 @@ Fixed::~Fixed(void)
 	std::cout << "Destructor called" << std::endl;
 }
 
-void	Fixed::operator=(Fixed &copy)
+Fixed	&Fixed::operator=(Fixed const &copy)
 {
 	std::cout << "Copy assigment operator called" << std::endl;
 	this->number_value = copy.number_value;
+	return (*this);
 }
 
 int	Fixed::getRawBits(void)
@@ -62,19 +96,19 @@ void	Fixed::setRawBits(int const raw)
 	this->number_value = raw;
 }
 
-float		toFloat(void) const
+float	Fixed::toFloat(void) const
 {
-	return (1.0f);
+	return ((float)this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
 }
 
-int			toInt(void) const
+int		Fixed::toInt(void) const
 {
-	return (1);
+	return (this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
 }
 
-std::string	operator<<(const Fixed &copy); 
+std::ostream&	operator<<(std::ostream &str, const Fixed &copy)
 {
-	return ("");
+	return (str << copy.toFloat());
 }
 /*
 		Fixed(void);

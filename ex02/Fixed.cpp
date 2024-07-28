@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/28 13:01:53 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/28 13:28:06 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,8 @@ Fixed::~Fixed(void)
 
 Fixed	&Fixed::operator=(Fixed const &copy)
 {
-	if ( this != &copy)
-	{
-		std::cout << "Copy assigment operator called" << std::endl;
-		this->number_value = copy.getRawBits();
-	}
+	std::cout << "Copy assigment operator called" << std::endl;
+	this->number_value = copy.number_value;
 	return (*this);
 }
 
@@ -111,17 +108,67 @@ int		Fixed::toInt(void) const
 	return (this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
 }
 
-/*The operators are functions que are called with the left param as 1st param
-and the  seconds param as the right param
-	Fixed a;
-	std::cout << a; 
-is equals to
-	operator<<(std::cout, a);
-*/
 std::ostream&	operator<<(std::ostream &str, const Fixed &copy)
 {
 	return (str << copy.toFloat());
 }
+
+bool	operator<(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() < num2.getRawBits());
+}
+
+bool	operator>(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() > num2.getRawBits());
+}
+
+bool	operator<=(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() <= num2.getRawBits());
+}
+
+bool	operator>=(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() >= num2.getRawBits())
+}
+
+bool	operator==(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() == num2.getRawBits());
+}
+
+bool	operator!=(Fixed const &num1, Fixed const &num2)
+{
+	return (num1.getRawBits() != num2.getRawBits());
+}
+
+Fixed	operator+(Fixed const &num1, Fixed const &num2)
+{
+	Fixed	result;
+	result.setRawBits(num1.getRawBits() + num2.getRawBits());
+	return (result);
+}
+
+Fixed	operator-(Fixed const &num1, Fixed const &num2)
+{
+	Fixed result;
+	result.setRawBits(num1.getRawBits) - num2.getRawBits());
+	return (result);
+}
+
+Fixed	operator*(Fixed const &num1, Fixed const &num2)
+{
+	Fixed result;
+	result.setRawBits(num1.getRawBits) * num2.getRawBits());
+	return (result);
+}
+
+Fixed		operator/(Fixed const &num1, Fixed const &num2)
+{
+	if ()
+}
+
 /*
 		Fixed(void);
 		Fixed(const Fixed &copy);

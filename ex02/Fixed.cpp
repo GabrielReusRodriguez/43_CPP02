@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/30 02:23:48 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/07/30 02:25:06 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,15 +186,12 @@ Fixed	operator*(Fixed const &num1, Fixed const &num2)
 	return (result);
 }
 
+/* The subject says that it is acceptable that the 0 division crashes*/
 Fixed		operator/(Fixed const &num1, Fixed const &num2)
 {
-	Fixed result;
-	
-	if (num2.getRawBits() == 0)
-		return result;
-	Fixed result2(num1.toFloat() / num2.toFloat());
-	//result.setRawBits(num1.getRawBits() / num2.getRawBits());
-	return (result2);
+	Fixed result(num1.toFloat() / num2.toFloat());
+
+	return (result);
 }
 
 /*

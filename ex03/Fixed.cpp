@@ -6,13 +6,12 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/30 02:18:51 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/07/30 00:49:33 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include <cmath>
 
 #include "Fixed.hpp"
 
@@ -68,22 +67,13 @@ Fixed::Fixed(const int value)
 	//std::cout << " INT value : " << value << " pow : " << ft_pow(2, Fixed::number_fractional_bits) << " FINAL : " << this->number_value << std::endl;
 }
 
-/* roundf function is from C accepted by subject
-float roundf(float x);
-
-DESCRIPTION
-
-These  functions  round  x  to  the  nearest  integer, but round halfway cases away from zero (regardless of the current rounding direction, see fenv(3)), instead of to the nearest even integer like
-       rint(3).
-
-       For example, round(0.5) is 1.0, and round(-0.5) is -1.0.
-
-*/
-
+/* First we convert the float to a number WITHOUT decimals*/
 Fixed::Fixed(const float value)
 {
 	//std::cout << "Float constructor called" << std::endl;
-	this->number_value = (int)(roundf(value * ft_pow(2, Fixed::number_fractional_bits)));
+
+	this->number_value = (int)(value * ft_pow(2, Fixed::number_fractional_bits));
+	//std::cout << " value : " << value << " pow : " << ft_pow(2, Fixed::number_fractional_bits) << " FINAL : " << this->number_value << std::endl;
 }
 
 Fixed::~Fixed(void)
@@ -191,9 +181,8 @@ Fixed		operator/(Fixed const &num1, Fixed const &num2)
 	
 	if (num2.getRawBits() == 0)
 		return result;
-	Fixed result2(num1.toFloat() / num2.toFloat());
-	//result.setRawBits(num1.getRawBits() / num2.getRawBits());
-	return (result2);
+	result.setRawBits(num1.getRawBits() / num2.getRawBits());
+	return (result);
 }
 
 /*

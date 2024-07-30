@@ -5,7 +5,8 @@ CPP_FLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 OBJ_DIR = ./obj
 
 SRC_FILES = main	\
-			Fixed
+			Fixed	\
+			Point
 
 SRC = $(addsuffix .cpp , ${SRC_FILES})
 OBJ = $(addprefix ${OBJ_DIR}/, $(addsuffix .o, ${SRC_FILES}))

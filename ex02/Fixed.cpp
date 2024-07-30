@@ -6,7 +6,7 @@
 /*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/30 02:18:51 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/07/30 02:23:48 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ These  functions  round  x  to  the  nearest  integer, but round halfway cases a
 Fixed::Fixed(const float value)
 {
 	//std::cout << "Float constructor called" << std::endl;
+	//this->number_value = (int)(roundf(value * ft_pow(2, Fixed::number_fractional_bits)));
 	this->number_value = (int)(roundf(value * ft_pow(2, Fixed::number_fractional_bits)));
 }
 

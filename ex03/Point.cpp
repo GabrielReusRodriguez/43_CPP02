@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 23:14:48 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/31 01:15:41 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:28:03 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Point::Point(const float x1, const float y1): x(x1), y(y1)
 
 }
 
-Point::Point(Point &copy): x(copy.x), y(copy.y)
+Point::Point(Point const &copy): x(copy.x), y(copy.y)
 {
 
 }
@@ -47,12 +47,12 @@ void	Point::operator=(const Point point)
 	const_cast<Fixed&>(y) = point.y;
 }
 
-Fixed	Point::getX(void)
+Fixed	Point::getX(void) const
 {
 	return (this->x);
 }
 
-Fixed	Point::getY(void)
+Fixed	Point::getY(void) const
 {
 	return (this->y);
 }

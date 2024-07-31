@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 02:03:10 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/07/31 01:00:56 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:23:02 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Let the coordinates of the three corners be (x1, y1), (x2, y2), and (x3, y3). An
 
 */
 
-static Fixed	calculate_area(Point p1, Point p2, Point p3)
+static Fixed	calculate_area(Point const p1, Point const p2, Point const p3)
 {
 	Fixed	half(2.0f);
 	Fixed	area;
@@ -44,10 +44,10 @@ bool bsp( Point const a, Point const b, Point const c, Point const point)
 	Fixed area_PAC;
 	
 	area_A = calculate_area(a, b, c);
-	area_PAB = calculate_area(p, a, b);
-	area_PBC = calculate_area(p, b, c);
-	area_PAC = calculate_area(p, a, c);
-	if (A == area_PAB + area_PBC + area_PAC)
+	area_PAB = calculate_area(point, a, b);
+	area_PBC = calculate_area(point, b, c);
+	area_PAC = calculate_area(point, a, c);
+	if (area_A == area_PAB + area_PBC + area_PAC)
 		return (true);
 	else
 		return (false);

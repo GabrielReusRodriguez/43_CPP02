@@ -5,6 +5,7 @@ CPP_FLAGS = -Wall -Werror -Wextra -std=c++98 -MMD -MP
 OBJ_DIR = ./obj
 
 SRC_FILES = main	\
+			bsp		\
 			Fixed	\
 			Point
 

@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 02:00:09 by greus-ro          #+#    #+#             */
-/*   Updated: 2024/07/31 21:31:18 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/08/06 22:08:28 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ class Point
 		Point(Point const &copy);
 		~Point();
 
-	void	operator=(const Point point);
-	Fixed	getX(void) const;
-	Fixed	getY(void) const;
+		void	operator=(const Point point);
+		Fixed	getX(void) const;
+		Fixed	getY(void) const;
 };
 
 bool bsp( Point const a, Point const b, Point const c, Point const point);

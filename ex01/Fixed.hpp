@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: greus-ro <greus-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:47 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/28 12:47:51 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/09/25 19:09:14 by greus-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ class Fixed
 		Fixed(const int value);
 		Fixed(const float value);
 		~Fixed(void);
-		int			getRawBits(void);
+		int			getRawBits(void) const ;
 		void		setRawBits(int const raw);
 		float		toFloat(void) const;
 		int			toInt(void) const;

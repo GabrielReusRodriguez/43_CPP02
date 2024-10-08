@@ -6,70 +6,43 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/10/08 22:40:58 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/10/09 00:09:26 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include "Fixed.hpp"
 
+
 const int Fixed::number_fractional_bits = 8;
-
-
-static float	ft_pow( int base, int exp)
-{
-	float	acum;
-	int		i;
-	
-	acum = 1;
-	if (exp == 0)
-		return (1);
-	if (exp > 0)
-	{
-		i = 0;
-		while (i <= exp)
-		{
-			acum = acum * (float) base;
-			i++;
-		}
-		return (acum);
-	}
-	else
-	{
-		i = 0;
-		while (i >= exp)
-		{
-			acum = acum / (float)base;
-			i--;
-		}
-		return (acum);
-	}
-}
 
 Fixed::Fixed(void)
 {
 	std::cout << "Default constructor called" << std::endl;
-	this->number_value = 0;
+	this->setRawBits(0);
 }
 
 Fixed::Fixed(const Fixed &copy)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	this->number_value = copy.number_value;
+	this->setRawBits(copy.getRawBits());
 }
 
 Fixed::Fixed(const int value)
 {
 	std::cout << "Int constructor called" << std::endl;
-	this->number_value = value * ft_pow(2,Fixed::number_fractional_bits);
+	this->setRawBits(value << Fixed::number_fractional_bits);
 }
 
+/* We must round up the value because if we do not do, we do not get the entire number.
+42.42 => 42.418*/
 Fixed::Fixed(const float value)
 {
 	std::cout << "Float constructor called" << std::endl;
-	this->number_value = value * ft_pow(2, Fixed::number_fractional_bits);
+	this->setRawBits(std::ceil(value * (float)(1 << Fixed::number_fractional_bits)));
 }
 
 Fixed::~Fixed(void)
@@ -82,33 +55,29 @@ Fixed	&Fixed::operator=(Fixed const &copy)
 	if (this != &copy)
 	{
 		std::cout << "Copy assigment operator called" << std::endl;
-		this->number_value = copy.getRawBits();
+		this->setRawBits(copy.getRawBits());
 	}
 	return (*this);
 }
 
 int	Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
 	return (this->number_value);
 }
 
 void	Fixed::setRawBits(int const raw)
 {
-	std::cout << "setRawBits member function called" << std::endl;
 	this->number_value = raw;
 }
 
 float	Fixed::toFloat(void) const
 {
-	std::cout << "toFloat member function called" << std::endl;
-	return ((float)this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
+	return ((float)((float)(this->getRawBits()) / (float)(1 << Fixed::number_fractional_bits)));
 }
 
 int		Fixed::toInt(void) const
 {
-	std::cout << "toInt member function called" << std::endl;
-	return (this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
+	return (this->getRawBits() >> Fixed::number_fractional_bits);
 }
 
 /*The operators are functions que are called with the left param as 1st param
@@ -122,16 +91,3 @@ std::ostream&	operator<<(std::ostream &str, const Fixed &copy)
 {
 	return (str << copy.toFloat());
 }
-/*
-		Fixed(void);
-		Fixed(const Fixed &copy);
-		Fixed(const int value);
-		Fixed(const float value);
-		~Fixed(void);
-		void 		operator=(Fixed &copy);
-		int			getRawBits(void);
-		void		setRawBits(int const raw);
-		float		toFloat(void) const;
-		int			toInt(void) const;
-		std::string	operator<<(Fixed &copy); 
-*/

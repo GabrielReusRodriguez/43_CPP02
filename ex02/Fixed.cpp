@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/09/25 19:11:27 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/10/09 00:46:18 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,73 +18,28 @@
 
 const int Fixed::number_fractional_bits = 8;
 
-
-static float	ft_pow( int base, int exp)
-{
-	float	acum;
-	int		i;
-	
-	acum = 1.0f;
-	if (exp == 0)
-		return (1.0f);
-	if (exp > 0)
-	{
-		i = 0;
-		while (i < exp)
-		{
-			acum = acum * (float) base;
-			i++;
-		}
-		return (acum);
-	}
-	else
-	{
-		i = 0;
-		while (i < -exp)
-		{
-			acum = acum / (float)base;
-			i++;
-		}
-		return (acum);
-	}
-}
-
 Fixed::Fixed(void)
 {
 	//std::cout << "Default constructor called" << std::endl;
-	this->number_value = 0;
+	this->setRawBits(0);
 }
 
 Fixed::Fixed(const Fixed &copy)
 {
 	//std::cout << "Copy constructor called" << std::endl;
-	this->number_value = copy.number_value;
+	this->setRawBits(copy.number_value);
 }
 
 Fixed::Fixed(const int value)
 {
 	//std::cout << "Int constructor called" << std::endl;
-	this->number_value = value * ft_pow(2,Fixed::number_fractional_bits);
-	//std::cout << " INT value : " << value << " pow : " << ft_pow(2, Fixed::number_fractional_bits) << " FINAL : " << this->number_value << std::endl;
+	this->setRawBits(value << Fixed::number_fractional_bits);
 }
-
-/* roundf function is from C accepted by subject
-float roundf(float x);
-
-DESCRIPTION
-
-These  functions  round  x  to  the  nearest  integer, but round halfway cases away from zero (regardless of the current rounding direction, see fenv(3)), instead of to the nearest even integer like
-       rint(3).
-
-       For example, round(0.5) is 1.0, and round(-0.5) is -1.0.
-
-*/
 
 Fixed::Fixed(const float value)
 {
 	//std::cout << "Float constructor called" << std::endl;
-	//this->number_value = (int)(roundf(value * ft_pow(2, Fixed::number_fractional_bits)));
-	this->number_value = (int)(roundf(value * ft_pow(2, Fixed::number_fractional_bits)));
+	this->setRawBits(std::ceil(value * (float)(1 << Fixed::number_fractional_bits)));
 }
 
 Fixed::~Fixed(void)
@@ -95,7 +50,7 @@ Fixed::~Fixed(void)
 Fixed	&Fixed::operator=(Fixed const &copy)
 {
 	//std::cout << "Copy assigment operator called" << std::endl;
-	this->number_value = copy.number_value;
+	this->setRawBits(copy.number_value);
 	return (*this);
 }
 
@@ -114,20 +69,20 @@ void	Fixed::setRawBits(int const raw)
 
 float	Fixed::toFloat(void) const
 {
-	//std::cout << "toFloat member function called" << std::endl;
-	//std::cout << "TO FLOAT pow: " << (float)ft_pow(2, -Fixed::number_fractional_bits) << " Value " << (float)this->number_value << " Final " << (float)this->number_value * ft_pow(2, -Fixed::number_fractional_bits) << std::endl;
-	return ((float)this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
+	float val;
+
+	val = (float)(this->getRawBits()) / (float)(1 << Fixed::number_fractional_bits);
+	return (val);
 }
 
 int		Fixed::toInt(void) const
 {
 	//std::cout << "toInt member function called" << std::endl;
-	return (this->number_value * ft_pow(2, -Fixed::number_fractional_bits));
+	return (this->getRawBits() >>  Fixed::number_fractional_bits);
 }
 
 std::ostream&	operator<<(std::ostream &str, const Fixed &copy)
 {
-//	std::cout << "Valor "
 	return (str << copy.toFloat());
 }
 
@@ -178,19 +133,14 @@ Fixed	operator-(Fixed const &num1, Fixed const &num2)
 
 Fixed	operator*(Fixed const &num1, Fixed const &num2)
 {
-	Fixed result(num1.toFloat() * num2.toFloat());
-		
-	//result.setRawBits((int)(ft_res * ft_pow(2, Fixed::number_fractional_bits)));
-	//result.setRawBits(num1.toInt() * num2.toInt());
-	//std::cout << "\tValor 1: "<< num1.getRawBits() << " Valor 2: " << num2.getRawBits() << std::endl;
+	Fixed result((float)(num1.toFloat() * num2.toFloat()));
 	return (result);
 }
 
 /* The subject says that it is acceptable that the 0 division crashes*/
 Fixed		operator/(Fixed const &num1, Fixed const &num2)
 {
-	Fixed result(num1.toFloat() / num2.toFloat());
-
+	Fixed result((float)(num1.toFloat() / num2.toFloat()));
 	return (result);
 }
 
@@ -261,18 +211,3 @@ Fixed&	Fixed::max(Fixed const &fixed1, Fixed const &fixed2)
 	else
 		return ((Fixed&)fixed2);
 }
-
-
-/*
-		Fixed(void);
-		Fixed(const Fixed &copy);
-		Fixed(const int value);
-		Fixed(const float value);
-		~Fixed(void);
-		void 		operator=(Fixed &copy);
-		int			getRawBits(void);
-		void		setRawBits(int const raw);
-		float		toFloat(void) const;
-		int			toInt(void) const;
-		std::string	operator<<(Fixed &copy); 
-*/

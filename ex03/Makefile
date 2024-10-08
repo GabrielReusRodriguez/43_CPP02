@@ -19,7 +19,7 @@ ${NAME}: ${OBJ}
 	c++ ${CPP_FLAGS} ${OBJ} -o ${NAME}
 
 ${OBJ_DIR}/%.o : %.cpp Makefile
-	mkdir -p ${OBJ_DIR}
+	@mkdir -p ${OBJ_DIR}
 	c++ ${CPP_FLAGS} -c $< -o $@
 
 -include ${DEP}

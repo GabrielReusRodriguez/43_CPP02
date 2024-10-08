@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:44 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/27 19:35:20 by gabriel          ###   ########.fr       */
+/*   Updated: 2024/10/09 00:06:40 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ const int Fixed::number_fractional_bits = 8;
 Fixed::Fixed(void)
 {
 	std::cout << "Default constructor called" << std::endl;
-	this->number_value = 0;
+	this->setRawBits(0);
 }
 
 Fixed::Fixed(const Fixed &copy)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	this->number_value = copy.number_value;
-	//this = copy;
+	this->setRawBits(copy.getRawBits());
 }
 
 Fixed::~Fixed(void)
@@ -37,11 +36,11 @@ Fixed::~Fixed(void)
 Fixed	&Fixed::operator=(Fixed &copy)
 {
 	std::cout << "Copy assigment operator called" << std::endl;
-	this->number_value = copy.number_value;
+	this->setRawBits(copy.getRawBits());
 	return (*this);
 }
 
-int	Fixed::getRawBits(void)
+int	Fixed::getRawBits(void) const
 {
 	std::cout << "getRawBits member function called" << std::endl;
 	return (this->number_value);

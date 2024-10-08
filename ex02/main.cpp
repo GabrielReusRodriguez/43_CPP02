@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: greus-ro <greus-ro@student.42barcel>       +#+  +:+       +#+        */
+/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:17:50 by gabriel           #+#    #+#             */
-/*   Updated: 2024/07/30 02:27:16 by greus-ro         ###   ########.fr       */
+/*   Updated: 2024/10/09 00:42:28 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 	std::cout << Fixed::max( a, b ) << std::endl;
 	std::cout << c / d << std::endl;
 	std::cout << e / f << std::endl;
-	
+	std::cout << c + d << std::endl;
+	std::cout << e - f << std::endl;
+
 	return 0;
 }
